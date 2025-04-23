@@ -211,7 +211,12 @@ export default function Reader() {
       
       <div className="flex-1 flex flex-col h-[calc(100vh-64px)]">
         {document && (
-          <PDFViewer url={`/api/view/${document.filename}`} />
+          <PDFViewer 
+            url={`/api/view/${document.filename}`} 
+            onLoadSuccess={() => {
+              console.log('PDF loaded successfully');
+            }}
+          />
         )}
       </div>
     </div>

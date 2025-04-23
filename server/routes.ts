@@ -1,4 +1,5 @@
 import type { Express } from "express";
+import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import multer from "multer";
@@ -198,6 +199,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     
     res.setHeader('Content-Type', 'application/pdf');
     fs.createReadStream(filePath).pipe(res);
+  });
+  
+  // Serve the PDF.js worker file
+  app.get('/pdf.worker.js', (req, res) => {
+    const clientPublicDir = path.join(import.meta.dirname, '..', 'client', 'public');
+    const workerPath = path.join(clientPublicDir, 'pdf.worker.js');
+    
+    if (fs.existsSync(workerPath)) {
+      res.setHeader('Content-Type', 'application/javascript');
+      fs.createReadStream(workerPath).pipe(res);
+    } else {
+      res.status(404).send('Worker file not found');
+    }
   });
 
   const httpServer = createServer(app);
