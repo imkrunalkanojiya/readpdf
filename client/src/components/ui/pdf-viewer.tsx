@@ -14,9 +14,8 @@ import {
   Loader
 } from 'lucide-react';
 
-// Set worker source - use alternate approach with version
-const pdfjsVersion = '5.1.91'; // Matches our installed version
-pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsVersion}/build/pdf.worker.min.js`;
+// Set the worker to use our local copy that we copied to the public directory
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
 interface PDFViewerProps {
   url: string;

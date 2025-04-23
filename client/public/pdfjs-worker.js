@@ -1,0 +1,1 @@
+// This file will be filled dynamically with the PDF.js worker code
