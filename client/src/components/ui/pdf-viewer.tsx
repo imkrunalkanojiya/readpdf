@@ -58,8 +58,8 @@ export function PDFViewer({ url, onLoadSuccess }: PDFViewerProps) {
     <div className="flex flex-col h-full">
       <div 
         ref={containerRef}
-        className="flex-1 bg-gray-100 relative"
-        style={{ overflow: 'hidden' }}
+        className="flex-1 bg-gray-100 relative overflow-hidden"
+        style={{ height: 'calc(100vh - 120px)' }}
       >
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-10">
@@ -75,10 +75,11 @@ export function PDFViewer({ url, onLoadSuccess }: PDFViewerProps) {
           className="w-full h-full border-0"
           onLoad={handleLoad}
           style={{ 
-            transform: `scale(${zoom / 100})`, 
-            transformOrigin: 'center top',
-            height: `${100 * (100 / zoom)}%`,
-            width: `${100 * (100 / zoom)}%`
+            border: 'none',
+            display: 'block',
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden'
           }}
         />
       </div>

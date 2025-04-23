@@ -72,11 +72,13 @@ export default function Reader() {
   const handleDownload = () => {
     if (!document) return;
     
-    // Create a link to download the file
-    const link = document.createElement('a');
+    // Use window object to create a link element
+    const link = window.document.createElement('a');
     link.href = `/api/view/${document.filename}`;
     link.download = document.title + '.pdf';
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
   };
 
   const handleShare = () => {
@@ -143,13 +145,18 @@ export default function Reader() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="bg-white p-4 border-b border-gray-200 rounded-t-lg flex items-center justify-between">
+    <div className="h-screen flex flex-col bg-gray-50 overflow-hidden">
+      <div className="bg-white p-4 border-b shadow-sm flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="icon" onClick={handleBackClick}>
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h2 className="font-semibold text-gray-800 truncate">{document.title}</h2>
+          <div>
+            <h2 className="font-semibold text-gray-800 truncate max-w-md">{document.title}</h2>
+            <p className="text-xs text-gray-500">
+              {document.totalPages} pages • Added {new Date(document.uploadedAt || '').toLocaleDateString()}
+            </p>
+          </div>
         </div>
         <div className="flex items-center space-x-2">
           <Button 
@@ -209,7 +216,7 @@ export default function Reader() {
         </div>
       </div>
       
-      <div className="flex-1 flex flex-col h-[calc(100vh-64px)]">
+      <div className="flex-1 overflow-hidden">
         {document && (
           <PDFViewer 
             url={`/api/view/${document.filename}`} 
