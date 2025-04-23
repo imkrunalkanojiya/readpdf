@@ -58,16 +58,27 @@ export const sortDocuments = (
       return sortedDocs.sort((a, b) => {
         const aTime = a.lastOpenedAt || a.uploadedAt;
         const bTime = b.lastOpenedAt || b.uploadedAt;
-        return bTime.getTime() - aTime.getTime();
+        
+        // Handle null or undefined cases
+        if (!aTime && !bTime) return 0;
+        if (!aTime) return 1;
+        if (!bTime) return -1;
+        
+        return new Date(bTime).getTime() - new Date(aTime).getTime();
       });
     case 'name':
       return sortedDocs.sort((a, b) => 
         a.title.localeCompare(b.title)
       );
     case 'dateAdded':
-      return sortedDocs.sort((a, b) => 
-        new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-      );
+      return sortedDocs.sort((a, b) => {
+        // Handle null cases
+        if (!a.uploadedAt && !b.uploadedAt) return 0;
+        if (!a.uploadedAt) return 1;
+        if (!b.uploadedAt) return -1;
+        
+        return new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime();
+      });
     case 'size':
       return sortedDocs.sort((a, b) => 
         b.size - a.size

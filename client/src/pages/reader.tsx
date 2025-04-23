@@ -76,9 +76,9 @@ export default function Reader() {
     const link = window.document.createElement('a');
     link.href = `/api/view/${document.filename}`;
     link.download = document.title + '.pdf';
-    document.body.appendChild(link);
+    window.document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    window.document.body.removeChild(link);
   };
 
   const handleShare = () => {
