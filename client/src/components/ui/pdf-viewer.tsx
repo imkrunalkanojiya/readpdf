@@ -3,7 +3,7 @@ import { Button } from './button';
 import { Input } from './input';
 import { Skeleton } from './skeleton';
 import * as pdfjs from 'pdfjs-dist';
-import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist';
+import { PDFDocumentProxy } from 'pdfjs-dist';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -14,8 +14,9 @@ import {
   Loader
 } from 'lucide-react';
 
-// Set the worker source
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+// Set worker source - use alternate approach with version
+const pdfjsVersion = '5.1.91'; // Matches our installed version
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsVersion}/build/pdf.worker.min.js`;
 
 interface PDFViewerProps {
   url: string;
