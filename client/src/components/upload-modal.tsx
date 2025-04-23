@@ -109,7 +109,8 @@ export function UploadModal({ isOpen, onClose }: UploadModalProps) {
       const formData = new FormData();
       formData.append('file', selectedFile);
       formData.append('title', title || selectedFile.name);
-      if (categoryId) {
+      // Only append categoryId if it's not "0" (Uncategorized)
+      if (categoryId && categoryId !== "0") {
         formData.append('categoryId', categoryId);
       }
       
@@ -240,7 +241,7 @@ export function UploadModal({ isOpen, onClose }: UploadModalProps) {
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Uncategorized</SelectItem>
+                  <SelectItem value="0">Uncategorized</SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category.id} value={category.id.toString()}>
                       {category.name}
