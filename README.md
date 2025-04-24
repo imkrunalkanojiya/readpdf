@@ -21,4 +21,4 @@ A modern PDF viewer with persistent storage capabilities and responsive controls
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/imkrunalkanojiya/PDFReader.git
+git clone https://github.com/imkrunalkanojiya/readpdf.git
