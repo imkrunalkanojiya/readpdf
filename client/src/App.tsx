@@ -5,46 +5,40 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "./pages/home";
 import Reader from "./pages/reader";
-import { useEffect, useState } from "react";
+import { Sidebar } from './components/Sidebar';
+import { SidebarProvider } from './contexts/SidebarContext';
+import Favorites from "./pages/favorites"; 
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/reader/:id" component={Reader} />
+      {/* Uncomment once Favorites component is created */}
+      <Route path="/favorites" component={Favorites} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  // Close sidebar when resizing to large screen
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setIsSidebarOpen(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
+export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="min-h-screen flex flex-col bg-gray-50 font-sans text-gray-800">
-          <Router />
-        </div>
+        <SidebarProvider>
+          <div className="flex h-screen bg-gray-50 font-sans text-gray-800">
+            <Sidebar />
+            <main className="flex-1 overflow-auto">
+              {/* Render Router inside main content area */}
+              <Router />
+            </main>
+          </div>
+        </SidebarProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
 }
+
+// Removed stray toggleSidebar function and misplaced return statement
 
 export default App;

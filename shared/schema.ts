@@ -50,3 +50,17 @@ export const insertDocumentSchema = createInsertSchema(documents).omit({
 
 export type InsertDocument = z.infer<typeof insertDocumentSchema>;
 export type Document = typeof documents.$inferSelect;
+
+export const annotations = pgTable("annotations", {
+  id: serial("id").primaryKey(),
+  documentId: integer("document_id").references(() => documents.id),
+  type: text("type").notNull(),
+  content: text("content").notNull(),
+  pageNumber: integer("page_number").notNull(),
+  coordinates: text("coordinates").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  createdBy: integer("created_by").references(() => users.id),
+});
+
+export const insertAnnotationSchema = createInsertSchema(annotations);
+export type Annotation = typeof annotations.$inferSelect;

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Header } from "@/components/header";
-import { Sidebar } from "@/components/sidebar";
 import { PDFCard } from "@/components/pdf-card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
@@ -82,11 +81,7 @@ export default function Home() {
       />
       
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar 
-          isOpen={isSidebarOpen} 
-          onSearchMobile={handleSearchChange} 
-        />
-        
+        {/* Sidebar removed from here, it's now handled in App.tsx */}
         <main className="flex-1 overflow-auto bg-gray-50 p-4 lg:p-6">
           <div className="container mx-auto">
             <div className="mb-6">
@@ -143,13 +138,7 @@ export default function Home() {
                 >
                   <LayoutGrid className="h-4 w-4" />
                 </Button>
-                <Button 
-                  variant={currentView === "list" ? "secondary" : "outline"}
-                  size="icon"
-                  onClick={() => setCurrentView("list")}
-                >
-                  <List className="h-4 w-4" />
-                </Button>
+            
               </div>
             </div>
 
